@@ -1,4 +1,4 @@
-import { MapPin, Facebook, Instagram, Users, BookOpen, Clock, HeartHandshake, ShieldCheck, TreePine, MessageSquare, Briefcase } from 'lucide-react'
+import { MapPin, Facebook, Instagram, Users, BookOpen, Clock, HeartHandshake, ShieldCheck, TreePine, MessageSquare, Briefcase, Music } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Helmet } from 'react-helmet-async'
 import { useState, useEffect } from 'react'
@@ -230,6 +230,45 @@ export default function Home() {
                         close={() => setIndex(-1)}
                         slides={photos}
                     />
+                </div>
+            </section>
+
+            {/* Lagu Komunitas Section */}
+            <section id="lagu" className="py-20 md:py-28 bg-stone-900 text-stone-50 border-y-8 border-amber-800">
+                <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
+                    <h2 className="text-3xl md:text-5xl font-black uppercase mb-8">
+                        <Music className="w-10 h-10 inline-block mr-4 text-amber-500 align-top" />
+                        Lagu Komunitas
+                    </h2>
+                    <p className="text-lg md:text-xl font-medium mb-12 text-stone-300 opacity-90 max-w-2xl mx-auto block">
+                        Dengarkan karya-karya lagu resmi kami yang diciptakan untuk menggelorakan semangat melestarikan warisan leluhur nusantara.
+                    </p>
+
+                    <div className="space-y-8 max-w-2xl mx-auto">
+                        <div className="bg-stone-800 p-6 md:p-8 rounded-lg shadow-lg border-l-4 border-amber-500 text-left">
+                            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Jejak Luhur Nusantara</h3>
+                            <p className="text-amber-500 font-semibold mb-6 flex items-center gap-2">
+                                <Users className="w-5 h-5 inline" />
+                                Ciptaan: Dr. Minta Harsana
+                            </p>
+                            <audio controls className="w-full CustomAudio">
+                                <source src="/music/jejak.mp3" type="audio/mpeg" />
+                                Browser Anda tidak mendukung elemen audio.
+                            </audio>
+                        </div>
+
+                        <div className="bg-stone-800 p-6 md:p-8 rounded-lg shadow-lg border-l-4 border-amber-500 text-left">
+                            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Sedulur Saklawase di Kandang Kebo</h3>
+                            <p className="text-amber-500 font-semibold mb-6 flex items-center gap-2">
+                                <Users className="w-5 h-5 inline" />
+                                Ciptaan: Dr. Minta Harsana
+                            </p>
+                            <audio controls className="w-full CustomAudio">
+                                <source src="/music/sedulur.mp3" type="audio/mpeg" />
+                                Browser Anda tidak mendukung elemen audio.
+                            </audio>
+                        </div>
+                    </div>
                 </div>
             </section>
 
