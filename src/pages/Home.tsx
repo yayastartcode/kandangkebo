@@ -1,9 +1,27 @@
-import { MapPin, Facebook, Users, BookOpen, Clock, HeartHandshake, ShieldCheck, TreePine, MessageSquare, Briefcase } from 'lucide-react'
+import { MapPin, Facebook, Instagram, Users, BookOpen, Clock, HeartHandshake, ShieldCheck, TreePine, MessageSquare, Briefcase } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { useState, useEffect } from 'react'
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
 
 export default function Home() {
+    const [index, setIndex] = useState(-1);
+    const photos = Array.from({ length: 18 }, (_, i) => ({ src: `/images/kebogl${i + 1}.jpeg` }));
+
+    // Slideshow state
+    const [heroBgIndex, setHeroBgIndex] = useState(0);
+
+    useEffect(() => {
+        // Inisialisasi index acak supaya tiap kali dikunjungi mendapat banner berbeda
+        setHeroBgIndex(Math.floor(Math.random() * photos.length));
+
+        const interval = setInterval(() => {
+            setHeroBgIndex(Math.floor(Math.random() * photos.length));
+        }, 4000); // Ganti gambar secara acak setiap 4 detik
+        return () => clearInterval(interval);
+    }, [photos.length]);
+
     return (
         <>
             <Helmet>
@@ -12,8 +30,20 @@ export default function Home() {
                 <link rel="canonical" href="https://kandangkebo.org/" />
             </Helmet>
             {/* Hero Section */}
-            <section className="bg-amber-800 text-stone-50 py-24 md:py-32">
-                <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
+            <section className="relative text-stone-50 py-24 md:py-32 overflow-hidden bg-stone-900 min-h-[500px] flex items-center">
+                {/* Background Slideshow */}
+                {photos.map((photo, i) => (
+                    <div
+                        key={i}
+                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === heroBgIndex ? 'opacity-100' : 'opacity-0'}`}
+                    >
+                        <img src={photo.src} alt="" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-amber-900/50 mix-blend-multiply"></div>
+                        <div className="absolute inset-0 bg-stone-900/60 z-0"></div>
+                    </div>
+                ))}
+
+                <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center relative z-10">
                     <h2 className="text-4xl md:text-6xl font-black uppercase mb-6 leading-tight">
                         Menapak Jejak <br className="hidden md:block" /> Leluhur Nusantara
                     </h2>
@@ -21,13 +51,14 @@ export default function Home() {
                         Komunitas pelestari warisan budaya independen, mewadahi siapapun tanpa melihat latar belakang, disatukan oleh rasa cinta kepada kebudayaan dan peninggalan leluhur.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="https://www.facebook.com/groups/KANDANGKEBO/" target="_blank" rel="noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-none inline-flex flex-row items-center justify-center gap-2 transition-colors uppercase tracking-wider">
+                        <a href="https://web.facebook.com/groups/597697120439262/" target="_blank" rel="noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-none inline-flex flex-row items-center justify-center gap-2 transition-colors uppercase tracking-wider">
                             <Facebook className="w-5 h-5" />
                             Grup Facebook
                         </a>
-                        <Link to="/kegiatan" className="bg-stone-50 hover:bg-stone-200 text-amber-900 font-bold py-3 px-8 rounded-none transition-colors uppercase tracking-wider text-center">
-                            Kegiatan Kami
-                        </Link>
+                        <a href="https://www.instagram.com/komunitas_kandang_kebo" target="_blank" rel="noreferrer" className="bg-stone-50 hover:bg-stone-200 text-amber-900 font-bold py-3 px-8 rounded-none inline-flex flex-row items-center justify-center gap-2 transition-colors uppercase tracking-wider">
+                            <Instagram className="w-5 h-5" />
+                            Instagram
+                        </a>
                     </div>
                 </div>
             </section>
@@ -158,6 +189,47 @@ export default function Home() {
                             </Card>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Galeri Section */}
+            <section id="galeri" className="py-20 md:py-28 bg-stone-200">
+                <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black uppercase text-stone-900 inline-block border-b-4 border-amber-800 pb-2">
+                            Galeri
+                        </h2>
+                        <p className="mt-4 text-lg font-medium text-stone-600 max-w-2xl mx-auto block">
+                            Dokumentasi visual dari berbagai aksi blusukan dan kegiatan pelestarian budaya.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+                        {photos.map((photo, idx) => (
+                            <div
+                                key={idx}
+                                className="aspect-square overflow-hidden cursor-pointer relative group bg-stone-300"
+                                onClick={() => setIndex(idx)}
+                            >
+                                <img
+                                    src={photo.src}
+                                    alt={`Dokumentasi ${idx + 1}`}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-amber-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span className="text-white font-bold uppercase tracking-wider text-xs border border-white px-3 py-1">Lihat</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <Lightbox
+                        index={index}
+                        open={index >= 0}
+                        close={() => setIndex(-1)}
+                        slides={photos}
+                    />
                 </div>
             </section>
 

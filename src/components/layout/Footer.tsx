@@ -9,7 +9,7 @@ export default function Footer() {
                     Komunitas Kandang Kebo terus menjaga, mengedukasi, dan mencari benang merah identitas leluhur tanpa henti.
                 </p>
                 <p className="text-sm font-bold opacity-50 uppercase tracking-widest">
-                    &copy; 2024 Komunitas Kandang Kebo.
+                    &copy; 2026 Komunitas Kandang Kebo.
                 </p>
             </div>
         </footer>
